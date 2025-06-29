@@ -1,0 +1,28 @@
+# === Embedding Settings ===
+embedding:
+  provider: ""                             # Options: "sentence-transformers" (free, local), "openai", "gemini", "gemini_studio", "xai"
+  model: ""                                # e.g., "all-MiniLM-L6-v2", "text-embedding-3-small", "models/embedding-001"
+  chunk_size: 500
+  chunk_overlap: 50
+
+# === LLM Settings ===
+llm:
+  provider: ""                             # Options: "openai", "gemini", "gemini_studio", "anthropic", "xai"
+  model: ""                                # e.g., "gpt-4", "gemini-pro", "claude-3-sonnet-20240229", etc.
+  temperature: 0.7
+
+# === API Keys ===
+# Only fill the keys you plan to use. Others can remain empty.
+api_keys:
+  openai: ""
+  gemini: ""                               # Gemini Cloud Console key (works for embedding only)
+  gemini_studio: ""                        # Gemini Studio key (chat + embedding)
+  anthropic: ""
+  xai: ""
+  huggingface: ""                          # Required only for HuggingFace Inference API
+
+# === Optional Settings ===
+settings:
+  use_streaming: false                     # Enable if your LLM supports streaming (e.g., OpenAI, Anthropic)
+  show_source_chunks: true                 # Show the text chunks used for answering in output
+  verbose: true                            # Set to false to reduce logs

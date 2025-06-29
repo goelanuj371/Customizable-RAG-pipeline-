@@ -1,0 +1,13 @@
+langchain
+google-generativeai
+openai
+pyyaml
+sentence-transformers
+faiss-cpu
+langchain-xai
+huggingface-hub
+pandas
+pypdf
+python-docx
+langchain-community
+langchain-google-genai

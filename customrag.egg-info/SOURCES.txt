@@ -1,0 +1,11 @@
+MANIFEST.in
+README.md
+setup.py
+customrag/__init__.py
+customrag/rag_pipeline.py
+customrag.egg-info/PKG-INFO
+customrag.egg-info/SOURCES.txt
+customrag.egg-info/dependency_links.txt
+customrag.egg-info/entry_points.txt
+customrag.egg-info/requires.txt
+customrag.egg-info/top_level.txt

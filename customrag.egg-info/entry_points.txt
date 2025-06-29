@@ -1,0 +1,2 @@
+[console_scripts]
+customrag-setup = customrag_setup:main
