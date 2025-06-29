@@ -1,27 +1,21 @@
-# 🧠 customrag
+# customrag
 
-**customrag** is a customizable **Retrieval-Augmented Generation (RAG)** pipeline that supports **multiple LLMs and embedding models** via a simple YAML config. It’s built for developers who want a plug-and-play RAG setup that works across:
-
-* ✅ OpenAI (ChatGPT, Embeddings)
-* ✅ Gemini (Cloud Console SDK or Gemini Studio via LangChain)
-* ✅ HuggingFace Hub
-* ✅ xAI
-* ✅ Local models via Sentence Transformers
+**customrag** is a customizable **Retrieval-Augmented Generation (RAG)** pipeline implemented as a Python library. It allows developers to quickly integrate RAG into their applications using a simple configuration system. With support for multiple LLM and embedding providers, `customrag` offers an easy way to experiment with various APIs and document formats.
 
 ---
 
-## 🚀 Features
+## Features
 
-* 📆 Easy pip install (`pip install customrag`)
-* ⚙️ YAML-based config — switch providers anytime
-* 🔗 Supports **multiple file formats** (`.txt`, `.pdf`, `.csv`, `.json`, `.docx`, `.md`)
-* 📁 Saves vectorstore using FAISS
-* 🧐 Built-in SDK support for Gemini Cloud Console (not supported by LangChain)
-* 🛠️ LangChain-native support for OpenAI, xAI, Gemini Studio, and HuggingFace
+* Easy `pip` installation: `pip install customrag`
+* YAML-based configuration for flexibility
+* Works with `.txt`, `.pdf`, `.csv`, `.json`, `.docx`, and `.md` files
+* Embedding storage and retrieval using FAISS
+* Supports Gemini SDK (Cloud Console) and LangChain-native providers
+* CLI tool for quick config generation
 
 ---
 
-## 👅 Installation
+## Installation
 
 ```bash
 pip install customrag
@@ -29,28 +23,28 @@ pip install customrag
 
 ---
 
-## 🛠️ One-Time Setup
+## Quick Setup
 
-Create a default config file in your project directory:
+Generate a default `config.yaml` in your project directory:
 
 ```bash
 customrag-setup
 ```
 
-This generates a `config.yaml` file with placeholders for your API keys and model settings.
+Edit the file to include your API keys and desired models.
 
 ---
 
-## 📁 Example `config.yaml`
+## Sample config.yaml
 
 ```yaml
 embedding:
-  provider: gemini            # Options: gemini, openai, huggingface, sentence-transformers, xai, gemini_studio
-  model: models/embedding-001 # Model for embeddings
+  provider: gemini
+  model: models/embedding-001
 
 llm:
-  provider: gemini            # Options: gemini, gemini_studio, openai, huggingface, xai
-  model: gemini-1.5-pro       # Chat model
+  provider: gemini
+  model: gemini-1.5-pro
 
 api_keys:
   gemini: your_gemini_api_key_here
@@ -62,9 +56,9 @@ api_keys:
 
 ---
 
-## 🔧 Usage
+## How to Use
 
-### 1⃣ Initialize the Pipeline
+### Step 1: Initialize the RAG pipeline
 
 ```python
 from customrag import RAGPipeline
@@ -72,107 +66,74 @@ from customrag import RAGPipeline
 pipeline = RAGPipeline(config_path="config.yaml")
 ```
 
----
-
-### 2⃣ Build a Vectorstore from Documents
+### Step 2: Build a Vectorstore
 
 ```python
-pipeline.build_vectorstore("resume.pdf")  # Accepts .pdf, .txt, .docx, .md, .json, .csv
+pipeline.build_vectorstore("path_to_your_file.pdf")
 ```
 
-This will:
+This loads and chunks the document, embeds it, and stores it using FAISS.
 
-* Load and chunk your document
-* Embed it using the configured embedding model
-* Save the FAISS vectorstore locally
-
----
-
-### 3⃣ Ask a Question
+### Step 3: Ask Questions
 
 ```python
-answer = pipeline.query("What are my key skills?")
+answer = pipeline.query("What is this document about?")
+print(answer)
 ```
 
-Depending on your config, it will:
-
-* Retrieve top matching chunks using FAISS
-* Generate an answer using either LangChain or Gemini SDK
+The pipeline uses the configured LLM (via SDK or LangChain) to generate answers from the context.
 
 ---
 
-## 🤖 Supported Providers
+## Supported Providers
 
-| Provider                          | Embeddings ✅               | Chat (LLM) ✅           | Chat SDK Support |
-| --------------------------------- | -------------------------- | ---------------------- | ---------------- |
-| **OpenAI**                        | ✅ `text-embedding-ada-002` | ✅ `gpt-3.5 / gpt-4`    | ❌                |
-| **Gemini**                        | ✅ `models/embedding-001`   | ❌ *(SDK only)*         | ✅                |
-| **Gemini Studio**                 | ✅                          | ✅ `gemini-pro`         | ❌                |
-| **HuggingFace**                   | ✅                          | ✅ via `HuggingFaceHub` | ❌                |
-| **xAI**                           | ✅                          | ✅ `Grok (xAI)`         | ❌                |
-| **Local (sentence-transformers)** | ✅                          | ❌                      | ❌                |
-
----
-
-## 📆 Example Project Structure
-
-```
-your-project/
-├── config.yaml
-├── resume.pdf
-├── script.py
-└── faiss_index/
-```
+| Provider                      | Embeddings | LLM Chat | SDK Support |
+| ----------------------------- | ---------- | -------- | ----------- |
+| OpenAI                        | Yes        | Yes      | No          |
+| Gemini (Cloud Console)        | Yes        | No       | Yes         |
+| Gemini Studio                 | Yes        | Yes      | No          |
+| HuggingFace Inference API     | Yes        | Yes      | No          |
+| xAI                           | Yes        | Yes      | No          |
+| sentence-transformers (local) | Yes        | No       | No          |
 
 ---
 
-## 👨‍💼 CLI Tool
-
-Run this once in your project root:
+## CLI Support
 
 ```bash
 customrag-setup
 ```
 
-It will create a `config.yaml` you can edit with your API keys and model names.
+This creates a starter config that can be modified per your needs.
 
 ---
 
-## 💃 Supported Document Formats
+## License
 
-You can ingest files of type:
+MIT License
 
-* 📄 `.txt`, `.pdf`, `.docx`, `.md`
-* 📈 `.csv`
-* 🧾 `.json` (array of objects)
+Copyright (c) [2024] [Anuj Goel]
 
----
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-## 🧠 How It Works
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-```mermaid
-graph TD
-    A[User Input] -->|Query| B[RAGPipeline]
-    B --> C[FAISS Vectorstore]
-    C --> D[Top-K Context]
-    D --> E[LLM or Gemini SDK]
-    E --> F[Answer Returned]
-```
-
----
-
-## 👨‍💻 Author
-
-Made by [Anuj Goel](https://github.com/goelanuj371)
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
-## 📬 Contribute
+## Author
 
-Issues and PRs are welcome. Add support for more LLMs or improve CLI! 🚀
-
----
-
-## 📄 License
-
-MIT License – free for personal and commercial use.
+Developed by Anuj Goel. Contributions and feedback are welcome.
